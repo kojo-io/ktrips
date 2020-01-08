@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import {ModalController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import {SplashPage} from './splash/splash.page';
+import {ancestorWhere} from 'tslint';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +17,22 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private screenOrientation: ScreenOrientation
   ) {
     this.initializeApp();
   }
-
+  showSplash = true;
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      setTimeout(() => {
+        this.splashScreen.hide();
+      }, 500);
+
+      timer(5000).subscribe(() => this.showSplash = false);
+
+      await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     });
   }
 }

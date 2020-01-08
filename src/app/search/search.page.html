@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="background-color: #8bc34a">
+    <form class="ion-padding container" nz-form name="loginForm" [formGroup]="searchForm" novalidate>
+      <mat-card class="example-card">
+        <ion-row class="row">
+          <ion-col>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="FROM" formControlName="from" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptionsFrom | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </ion-col>
+          <ion-col>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="TO" formControlName="to" [matAutocomplete]="toauto">
+              <mat-autocomplete #toauto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptionsTo | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+      </mat-card>
+      <br>
+      <mat-card>
+        <ion-col>
+          <mat-form-field class="example-full-width">
+            <input readonly formControlName="date" matInput [min]="mindate" [max]="maxdate" [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+      </mat-card>
+    </form>
+  </div>
+  <br>
+ <div class="ion-padding-horizontal">
+   <ion-button size="large" expand="block" [disabled]="searchForm.invalid" (click)="GetAvailable()">Find Available Buses</ion-button>
+ </div>
+</ion-content>

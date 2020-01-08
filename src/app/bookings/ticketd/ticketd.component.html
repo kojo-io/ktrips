@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Tickets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of data.tickets; let i = index">
+      <ion-item (click)="openTicket(data.company, data.route, item, data.numberPlate)">
+        <ion-label>
+          <p>Seat: {{item.seatCode}} | {{item.bookCode}}</p>
+          <p>Name: {{item.name}}</p>
+          <p>Email: {{item.email}}</p>
+          <p>Phone: {{item.phone}}</p>
+          <p>Pick up point - {{item.pickupPoint}}</p>
+          <p>Drop off point - {{item.dropOffPoint}}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end" *ngIf="item.status !== 'Cancelled' && datecheck(item.departure) === true">
+        <ion-item-option color="danger" (click)="cancel(item.id)">Cancel</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

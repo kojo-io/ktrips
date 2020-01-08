@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title><span class="title">{{from}} - {{to}}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <a *ngFor="let item of data" (click)="openBus(item)">
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" style="text-align: start;">
+            <small><b>{{item.company.name}}</b></small>
+          </ion-col>
+          <ion-col size="6" style="text-align: end;">
+            <small><b>{{item.numberPlate}}</b></small>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+<!--            <small><b>{{item.price}}</b></small>-->
+          </ion-col>
+          <ion-col size="6" style="text-align: end;">
+            <small>Price: <b>{{item.price}}</b></small>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" style="text-align: start;">
+            <small>Type: <b>{{item.busType}}</b></small>
+          </ion-col>
+          <ion-col size="6" style="text-align: end;">
+            <small>Capacity:  <b>{{item.capacity}}</b></small>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="8" style="text-align: start;">
+            <small>Terminal: <b>{{item.station.station}}</b></small>
+          </ion-col>
+          <ion-col size="4" style="text-align: end;">
+            <small><b>{{item.remaining}} left</b></small>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5" style="text-align: start;">
+            <small>{{item.from}}</small>
+          </ion-col>
+          <ion-col size="2" style="text-align: center;">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </ion-col>
+          <ion-col size="5" style="text-align: end;">
+            <small>{{item.to}}</small>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </a>
+</ion-content>

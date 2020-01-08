@@ -1,0 +1,70 @@
+<nz-card>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-{{Lcol}}" *ngFor="let item of leftColumnNumberOfSeatsPerRow; let i=index">
+                  <ng-container *ngFor="let item of LeftSeats;">
+                    <ng-container *ngIf="!item.disabled">
+                      <div *ngIf="item.index === i" class="img-container"  [ngStyle]="{'background-color': item.color}">
+                        <img src="assets/images/seat.svg" width="30">
+                        <span>{{item.seatcode}}</span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="item.disabled">
+                      <div *ngIf="item.index === i" class="img-container"  [ngStyle]="{'background-color': item.color}">
+                        <img src="assets/images/seat.svg" width="30">
+                        <span>{{item.seatcode}}</span>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-{{Rcol}}" *ngFor="let item of rightColumnNumberOfSeatsPerRow; let i=index">
+                  <ng-container *ngFor="let item of RightSeats">
+                    <ng-container *ngIf="!item.disabled">
+                      <div *ngIf="item.index === i" class="img-container" [ngStyle]="{'background-color': item.color}">
+                        <img src="assets/images/seat.svg" width="30">
+                        <span>{{item.seatcode}}</span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="item.disabled">
+                      <div *ngIf="item.index === i" class="img-container" [ngStyle]="{'background-color': item.color}">
+                        <img src="assets/images/seat.svg" width="30">
+                        <span>{{item.seatcode}}</span>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" *ngFor="let item of backSeat; let i=index;">
+              <ng-container *ngIf="item.disabled">
+                <div class="img-container" [ngStyle]="{'background-color': item.color}">
+                  <img src="assets/images/seat.svg" width="30">
+                  <span>{{item.seatcode}}</span>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!item.disabled">
+                <div class="img-container" [ngStyle]="{'background-color': item.color}">
+                  <img src="assets/images/seat.svg" width="30">
+                  <span>{{item.seatcode}}</span>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-card>

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="printsection" class="ticket">
+    <h1>{{company.name}}</h1>
+    <ul>
+      <li class="f_row"> <span class="moscow">{{route.from.substring(0, 3).toUpperCase()}}  <span class="fromname">{{route.from}}</span></span>
+        <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+          <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+        </svg><span class="san">{{route.to.substring(0, 3).toUpperCase()}} <span class="toname">{{route.to}}</span></span>
+      </li>
+      <li class="s_row">
+        <span class="flight" data="Bus">{{numberPlate}}</span>
+        <span class="seat" data="Seat">{{data.seatCode}}</span>
+        <!--                        <span class="gate" data="Gate">37</span>-->
+      </li>
+      <li class="t_row"> <span class="date" data="Date">{{formatDate(data.departure)}}</span><span class="boarding" data="Boarding">{{data.departure | amLocal | amDateFormat: 'HH:mm'}}</span></li>
+      <li class="fo_row"> <span class="passenger" data="Book ID" >{{data.bookCode}}</span></li>
+      <li class="fi_row">
+        <ngx-barcode class="barcode" [bc-value]="data.bookCode" [bc-display-value]="true"></ngx-barcode>
+      </li>
+    </ul>
+  </div>
+</ion-content>

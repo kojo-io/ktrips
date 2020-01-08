@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Bookings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="top" horizontal="center" edge slot="fixed">
+    <ion-fab-button size="small" (click)="ngOnInit()">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="COMPLETED" >
+      <ion-list>
+        <ion-item *ngFor="let item of AllTickets" (click)="openTickets(item)">
+          <ion-label>
+            <small>{{formatDate(item.date)}}</small>
+            <p>{{item.route.from}} > {{item.route.to}}</p>
+            <p>{{item.company.name}} - {{item.numberPlate}} | {{item.busType}} | {{item.tickets.length}} Ticket(s)</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </mat-tab>
+    <mat-tab label="CANCELLED">
+      <ion-list>
+        <ion-item *ngFor="let item of AllCancelledTickets" (click)="openTickets(item)">
+          <ion-label>
+            <small>{{formatDate(item.date)}}</small>
+            <p>{{item.route.from}} > {{item.route.to}}</p>
+            <p>{{item.company.name}} - {{item.numberPlate}} | {{item.busType}} | {{item.tickets.length}} Ticket(s)</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </mat-tab>
+  </mat-tab-group>
+</ion-content>
