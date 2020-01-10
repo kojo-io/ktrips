@@ -18,13 +18,13 @@ export class BaseService {
   private baseurl = baseURL;
 
   // tslint:disable-next-line:ban-types
-  private booked = new BehaviorSubject<Boolean>(false);
+    private booked = new BehaviorSubject<Boolean>(false);
 
-  completed = this.booked.asObservable();
+    completed = this.booked.asObservable();
 
-  IsCompleted(value): void {
-    this.booked.next(value);
-  }
+    IsCompleted(value): void {
+      this.booked.next(value);
+    }
 
 
   getBaseUrl(): string {

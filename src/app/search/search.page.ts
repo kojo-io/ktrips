@@ -158,19 +158,8 @@ export class SearchPage implements OnInit {
                             from: this.searchForm.get('from').value,
                             to: this.searchForm.get('to').value});
                         await this.router.navigate(['/tabs/search/bus-results']);
-                        // const modal = await this.modalController.create({
-                        //     component: BusresultsComponent,
-                        //     componentProps: {
-                        //         data: this.AllAvailableBuses,
-                        //         from: this.searchForm.get('from').value,
-                        //         to: this.searchForm.get('to').value
-                        //     },
-                        //     id: 'bus results'
-                        // });
-                        // await modal.present();
                     }
                     console.log(result.data);
-                    // this.notify.createMessage('info', result.message);
                 }
             },
             async error => {
