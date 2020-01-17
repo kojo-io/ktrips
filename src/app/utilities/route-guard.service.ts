@@ -22,25 +22,20 @@ export class RouteGuard implements CanActivate {
           resolve(true);
         } else {
           this.baseService.logout();
-          localStorage.getItem('ustripsession');
-          // this.route.navigate(['/login']);
+          localStorage.removeItem('ustripsession');
           const modal = await this.modalController.create({
             component: LoginComponent
           });
           await modal.present();
-          // resolve(false);
         }
       }, async (error) => {
         error.title = 'User check';
-        // resolve(false);
         this.baseService.logout();
-        localStorage.getItem('ustripsession');
-        // this.route.navigate(['/login']);
+        localStorage.removeItem('ustripsession');
         const modal = await this.modalController.create({
           component: LoginComponent
         });
         await modal.present();
-        // throw (error);
       });
     });
   }

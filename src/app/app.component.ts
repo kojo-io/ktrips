@@ -26,12 +26,9 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
-      setTimeout(() => {
-        this.splashScreen.hide();
-      }, 500);
-
+      this.statusBar.backgroundColorByName('white');
+      this.splashScreen.hide();
       timer(5000).subscribe(() => this.showSplash = false);
-
       await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     });
   }

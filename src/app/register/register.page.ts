@@ -109,10 +109,15 @@ export class RegisterPage implements OnInit {
             duration: 5000
           });
           await toast.present();
+          await loading.dismiss();
         } else {
+          const toast = await this.toastController.create({
+            message: 'check your connection and try again',
+            duration: 5000
+          });
+          await toast.present();
           await loading.dismiss();
         }
-        await loading.dismiss();
       }
     );
   }

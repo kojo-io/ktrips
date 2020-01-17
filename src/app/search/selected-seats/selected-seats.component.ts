@@ -45,6 +45,9 @@ export class SelectedSeatsComponent implements OnInit {
 
     this.GetRoutePoints();
     this.SelectedSeats.forEach((value) => {
+      value.Name = `${this.baseService.getUserData().firstname} ${this.baseService.getUserData().lastName}`;
+      value.Email = this.baseService.getUserData().email;
+      value.Phone = this.baseService.getUserData().contact;
       this.editCache[value.seatcode] = {
         edit: false,
         data : {
@@ -52,9 +55,9 @@ export class SelectedSeatsComponent implements OnInit {
           DropOffPoint: 0,
           pickup: '',
           dropoff: '',
-          Name: '',
-          Email: '',
-          Phone: ''
+          Name: `${this.baseService.getUserData().firstname} ${this.baseService.getUserData().lastName}`,
+          Email: this.baseService.getUserData().email,
+          Phone: this.baseService.getUserData().contact
         }
       };
     });

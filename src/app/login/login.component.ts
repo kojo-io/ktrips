@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {LoadingController, ModalController, ToastController} from '@ionic/angular';
+import {LoadingController, ModalController, Platform, ToastController} from '@ionic/angular';
 import {BaseService} from '../utilities/base.service';
 import {LoginService} from './login.service';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -16,6 +16,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginClick = false;
   hide = true;
+
+  slideOpts = {
+    autoplay: true
+  };
   constructor(
       private router: Router,
       public loadingController: LoadingController,
@@ -23,9 +27,17 @@ export class LoginComponent implements OnInit {
       private baseService: BaseService,
       public toastController: ToastController,
       private loginService: LoginService,
-      public modalController: ModalController
+      public modalController: ModalController,
+      private platform: Platform
   ) {
     // this.statusBar.backgroundColorByName('white');
+    platform.backButton.subscribeWithPriority(9999999999999, async () => {
+      await this.modalController.dismiss();
+      const modal = await this.modalController.create({
+        component: LoginComponent
+      });
+      await modal.present();
+    })
   }
 
   ngOnInit() {
@@ -34,9 +46,8 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
   }
+
   async login() {
-    // this.router.navigate(['/tabs']);
-    // return;
     const loading = await this.loadingController.create({
       message: 'Please wait ...',
     });
@@ -59,7 +70,6 @@ export class LoginComponent implements OnInit {
             await this.modalController.dismiss();
           }
           if (result.status === 500) {
-            // alert(result.message);
             const toast = await this.toastController.create({
               message: result.message,
               duration: 5000
@@ -68,7 +78,6 @@ export class LoginComponent implements OnInit {
             await toast.present();
           }
           if (result.status === 104) {
-            // alert(result.message);
             const toast = await this.toastController.create({
               message: result.message,
               duration: 5000
@@ -90,7 +99,6 @@ export class LoginComponent implements OnInit {
   }
 
   setUserData(result: any): void {
-    // alert(result.data.user.id);
     this.baseService.setSessionData(result);
   }
 

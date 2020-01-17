@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatBottomSheetRef} from '@angular/material';
 import {ModalController} from '@ionic/angular';
-import {SingleResultComponent} from '../single-result/single-result.component';
 import {BaseService} from '../../utilities/base.service';
 import {Router} from '@angular/router';
 
@@ -46,13 +44,5 @@ export class BusresultsComponent implements OnInit {
     this.baseService.setsessions('sresults',
         {AvailableBus: data});
     await this.router.navigate(['/tabs/search/single-result']);
-    // const modal = await this.modalController.create({
-    //   component: SingleResultComponent,
-    //   componentProps: {
-    //     AvailableBus: data,
-    //   },
-    //   id: 'ss'
-    // });
-    // await modal.present();
   }
 }

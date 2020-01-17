@@ -1,15 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>My Bookings</ion-title>
+    <img src="assets/images/logo/img-head.png" class="img-head">
+    <ion-title class="ion-padding-bottom">My Bookings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="top" horizontal="center" edge slot="fixed">
-    <ion-fab-button size="small" (click)="ngOnInit()">
-      <ion-icon name="refresh"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <ion-refresher slot="fixed" (ionRefresh)="loader($event)">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+<!--  <ion-fab vertical="top" horizontal="center" edge slot="fixed">-->
+<!--    <ion-fab-button size="small" (click)="ngOnInit()">-->
+<!--      <ion-icon name="refresh"></ion-icon>-->
+<!--    </ion-fab-button>-->
+<!--  </ion-fab>-->
   <mat-tab-group mat-stretch-tabs>
     <mat-tab label="COMPLETED" >
       <ion-list>

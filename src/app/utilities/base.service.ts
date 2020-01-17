@@ -42,6 +42,10 @@ export class BaseService {
     return false;
   }
 
+  clearSessionData(): any {
+      localStorage.removeItem('ustripsession');
+  }
+
   setsessions(name, data): void {
     localStorage.setItem(name, JSON.stringify(data));
   }

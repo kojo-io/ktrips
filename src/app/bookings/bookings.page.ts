@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {BaseService} from '../utilities/base.service';
 import {BookingService} from './booking.service';
 import {LoadingController, ModalController} from '@ionic/angular';
@@ -10,7 +10,7 @@ import {TicketdComponent} from './ticketd/ticketd.component';
   templateUrl: './bookings.page.html',
   styleUrls: ['./bookings.page.scss'],
 })
-export class BookingsPage implements OnInit {
+export class BookingsPage implements OnInit, AfterContentInit {
   AllTickets: Array<any> = [];
   AllCancelledTickets: Array<any> = [];
   constructor(
@@ -21,16 +21,14 @@ export class BookingsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const loading = await this.loadingController.create({
-      message: 'Loading your bookings ...',
-      cssClass: 'spinner-color',
-      spinner: 'bubbles'
-    });
-    await loading.present();
+
+  }
+
+  async loader(event) {
     this.GetBookedTickets();
     this.GetCancelledTickets();
     setTimeout(async () => {
-      await loading.dismiss();
+      event.target.complete();
     }, 5000);
   }
 
@@ -63,5 +61,19 @@ export class BookingsPage implements OnInit {
       }
     });
     await modal.present();
+  }
+
+  async ngAfterContentInit() {
+    const loading = await this.loadingController.create({
+      message: 'Loading your bookings ...',
+      cssClass: 'spinner-color',
+      spinner: 'bubbles'
+    });
+    await loading.present();
+    this.GetBookedTickets();
+    this.GetCancelledTickets();
+    setTimeout(async () => {
+      await loading.dismiss();
+    }, 5000);
   }
 }

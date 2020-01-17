@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, AfterContentInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseService} from '../utilities/base.service';
 import {LoadingController, ModalController, ToastController} from '@ionic/angular';
@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
 })
-export class SearchPage implements OnInit {
+export class SearchPage implements OnInit, AfterContentInit {
 
     mindate = new Date();
     maxdate = new Date(2100, 1, 1);
@@ -45,6 +45,10 @@ export class SearchPage implements OnInit {
     }
 
     ngOnInit() {
+
+    }
+
+    ngAfterContentInit(): void {
         this.GetRoutes();
         this.searchForm = this.formbuilder.group({
             from: [null, Validators.required],

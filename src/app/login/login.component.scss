@@ -2,15 +2,29 @@ mat-form-field,button{
   width: 100%;
 }
 
-img{
-  display: block;
-  margin-top: 0px;
-  margin-left: 0px;
-  margin-right: 0px;
-  height: 300px;
-  width: 100%;
-}
+//img{
+//  display: block;
+//  margin-left: 0px;
+//  margin-right: 0px;
+//  height: 300px;
+//  width: 50%;
+//}
 
 .container{
   padding: 30px 40px;
 }
+
+.swiper-slide {
+  display: block;
+}
+
+ion-slide > h4 {
+  margin-top: -1.5rem;
+  margin-bottom: 2.8rem;
+}
+
+ion-slide > img {
+  max-width: 40%;
+  margin: 36px 0;
+}
+
