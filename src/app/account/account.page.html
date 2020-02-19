@@ -2,18 +2,20 @@
   <ion-toolbar>
     <img src="assets/images/logo/img-head.png" class="img-head">
     <ion-title class="ion-padding-bottom">My Account</ion-title>
+    <ion-chip slot="secondary" color="danger" *ngIf="offline">
+      <ion-label>network disconnected ☹</ion-label>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
   <ion-card>
-    <ion-item detail>
+    <ion-item detail [routerLink]="['/user-info']">
       <ion-avatar slot="start">
         <ion-icon size="large" name="contact"></ion-icon>
       </ion-avatar>
       <ion-label>
-        <h2>{{baseService.getUserData().firstname}} {{baseService.getUserData().lastName}}</h2>
-        <h3>{{baseService.getUserData().email}}</h3>
+        <h2>User Info</h2>
       </ion-label>
     </ion-item>
   </ion-card>

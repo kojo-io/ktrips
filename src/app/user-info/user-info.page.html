@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <img src="assets/images/logo/img-head.png" class="img-head">
+    <ion-chip slot="secondary" color="danger" *ngIf="offline">
+      <ion-label>network disconnected ☹</ion-label>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 class="ml-3">User Info</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <form [formGroup]="form">
+          <div class="card">
+            <div class="container-fluid">
+              <div clss="row">
+                <div class="col">
+                  <img class="img" [src]="image">
+                  <ion-fab-button class="click-img" size="small" (click)="presentActionSheet()" color="primary">
+                    <ion-icon name="aperture"></ion-icon>
+                  </ion-fab-button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 class="font-weight-bold">Personal Information</h4>
+            <ion-row>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>First Name</mat-label>
+                  <input matInput placeholder=" First Name" formControlName="firstName">
+                </mat-form-field>
+              </ion-col>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput placeholder=" Last Name" formControlName="lastName">
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Date Of Birth</mat-label>
+                  <input readonly matInput [matDatepicker]="picker" formControlName="dOB">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div class="card">
+            <h4 class="font-weight-bold">Contact Information</h4>
+            <ion-row>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Email</mat-label>
+                  <input type="email" readonly matInput placeholder=" Email" formControlName="email">
+                </mat-form-field>
+              </ion-col>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Contact</mat-label>
+                  <input type="number" matInput placeholder=" Contact" formControlName="contact">
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Address</mat-label>
+                  <textarea matInput placeholder=" Address" formControlName="address"></textarea>
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div class="card">
+            <h4 class="font-weight-bold">Other Information</h4>
+            <ion-row>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Emergency Contact 1</mat-label>
+                  <input type="number" matInput placeholder="Emergency Contact 1" formControlName="emergencyContact1">
+                </mat-form-field>
+              </ion-col>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Emergency Contact Name 1</mat-label>
+                  <input matInput placeholder=" Emergency Contact Name 1" formControlName="emergencyContactName1">
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Emergency Contact 2</mat-label>
+                  <input type="number" matInput placeholder="Emergency Contact 2" formControlName="emergencyContact2">
+                </mat-form-field>
+              </ion-col>
+              <ion-col>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Emergency Contact Name 2</mat-label>
+                  <input matInput placeholder=" Emergency Contact Name 2" formControlName="emergencyContactName2">
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+          </div>
+          <ion-row>
+            <ion-col>
+              <ion-button size="large" [disabled]="form.invalid" (click)="register()" expand="block">SUBMIT</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>

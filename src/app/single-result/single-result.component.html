@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <img src="assets/images/logo/img-head.png" class="img-head">
+<!--    <ion-title class="ion-padding-bottom"><span class="title">{{AvailableBus.company.name}} - {{AvailableBus.numberPlate}}</span></ion-title>-->
+    <ion-chip slot="secondary" color="danger" *ngIf="offline">
+      <ion-label>network disconnected ☹</ion-label>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="container-fluid pt-3">
+    <div class="row">
+      <div class="col-8 wow fadeInLeft animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <span><ion-icon name="radio-button-on"></ion-icon> from</span>
+        <h1 class="mt--1"><span class="mb-3" style="color: #8bc34a">{{AvailableBus.from}}</span></h1>
+        <hr class="hr-class">
+        <span><ion-icon name="radio-button-on"></ion-icon> destination</span>
+        <h1 class="mt--1"><span class="mb-3" style="color: #8bc34a">{{AvailableBus.to}}</span></h1>
+      </div>
+      <div class="col-4 wow fadeInRight animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <small>company</small>
+        <b class="mt--1 d-block"><span class="mb-3 font-weight-bold">-{{AvailableBus.company.name}}</span></b>
+        <small>bus</small>
+        <b class="mt--1 d-block"><span class="mb-3 font-weight-bold">-{{AvailableBus.numberPlate}}</span></b>
+        <small>bus type</small>
+        <b class="mt--1 d-block"><span class="mb-3 font-weight-bold">-{{AvailableBus.busType}}</span></b>
+        <small>capacity</small>
+        <b class="mt--1 d-block"><span class="mb-3 font-weight-bold">-{{AvailableBus.capacity}} Seats | {{AvailableBus.remaining}} left</span></b>
+        <small>terminal</small>
+        <b class="mt--1 d-block"><span class="mb-3 font-weight-bold">-{{AvailableBus.station.station}}</span></b>
+      </div>
+    </div>
+  </div>
+
+  <div class="ccpad wow slideInUp animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 ">
+          <div class="d-flex flex-row bd-highlight mb-3 justify-content-around">
+            <div class="p-2 d-flex bd-highlight flex-column">
+              <div class="img-container" [ngStyle]="{'background-color': 'white'}">
+                <img src="assets/images/seat.svg" width="30">
+                <span><small>Available</small></span>
+              </div>
+            </div>
+            <div class="p-2 d-flex bd-highlight flex-column">
+              <div class="img-container" [ngStyle]="{'background-color': '#b7c7f1'}">
+                <img src="assets/images/seat.svg" width="30">
+                <span><small>Selected</small></span>
+              </div>
+            </div>
+            <div class="p-2 d-flex bd-highlight flex-column">
+              <div class="img-container" [ngStyle]="{'background-color': '#f1d8b7'}">
+                <img src="assets/images/seat.svg" width="30">
+                <span><small>Booked</small></span>
+              </div>
+            </div>
+            <div class="p-2 d-flex bd-highlight flex-column">
+              <div class="img-container" [ngStyle]="{'background-color': 'green'}">
+                <img src="assets/images/seat.svg" width="30">
+                <span><small>Unavailable</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-10 col-md-6 col-sm-12 col-lg-5 ">
+          <app-seatsetup [AllTickets]="AllTickets" [data]="AvailableBus" (tickSelect)="GetSelectedTickets($event)"></app-seatsetup>
+        </div>
+      </div>
+    </div>
+    <ion-row class="ion-padding-top">
+      <ion-col>
+        <ion-button size="large" expand="block" (click)="openBus()" [disabled]="SelectedTickets.length === 0">Book Seats</ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

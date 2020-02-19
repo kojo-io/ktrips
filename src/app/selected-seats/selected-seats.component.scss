@@ -1,0 +1,52 @@
+mat-form-field, .button{
+  width: 100%;
+}
+
+.ccpad{
+  position: relative;
+  min-height: 80%;
+  bottom: -50px;
+  right: 0;
+  left: 0;
+  background-color: #fcfdff;
+  padding: 20px 10px 5px 5px;
+  border-radius: 0px 50px 0px 0px;
+  -webkit-box-shadow: 14px 10px 32px 8px rgba(209,209,209,1);
+  -moz-box-shadow: 14px 10px 32px 8px rgba(209,209,209,1);
+  box-shadow: 14px 10px 32px 8px rgba(209,209,209,1);
+}
+
+.card{
+  border: none;
+  margin-top: 10px;
+  text-align: left;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px 20px 20px 20px;
+  -webkit-box-shadow: 10px 10px 25px -2px rgba(209,209,209,1);
+  -moz-box-shadow: 10px 10px 25px -2px rgba(209,209,209,1);
+  box-shadow: 10px 10px 25px -2px rgba(209,209,209,1);
+}
+.hr-class{
+  border: 1px none grey;
+  border-top-style: solid;
+}
+
+.hr-vertical{
+  border: 1px none grey;
+  border-left-style: solid;
+  height: 80%;
+}
+
+.mt--1{
+  margin-top: -8px;
+}
+.mb--1{
+  margin-bottom: -10px;
+}
+
+ion-col{
+  //border: solid 1px grey;
+}

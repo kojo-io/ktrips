@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LoadingController, ModalController, Platform, ToastController} from '@ionic/angular';
@@ -6,6 +6,8 @@ import {BaseService} from '../utilities/base.service';
 import {LoginService} from './login.service';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {RegisterPage} from '../register/register.page';
+import {PhoneComponent} from "./phone/phone.component";
+import {PhoneVerifyComponent} from "../phone-verify/phone-verify.component";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginClick = false;
   hide = true;
-
+  @Input() connection: any;
+  canExit: Boolean = true;
   slideOpts = {
     autoplay: true
   };
@@ -31,21 +34,56 @@ export class LoginComponent implements OnInit {
       private platform: Platform
   ) {
     // this.statusBar.backgroundColorByName('white');
-    platform.backButton.subscribeWithPriority(9999999999999, async () => {
-      await this.modalController.dismiss();
-      const modal = await this.modalController.create({
-        component: LoginComponent
-      });
-      await modal.present();
-    })
+    if (baseService.getSesstionData() !== false) {
+       this.modalController.dismiss();
+    }
+
+    this.baseService.CanExist(true);
+
+    this.baseService.canExistApp.subscribe(
+         result => {
+          this.canExit = result;
+        }
+    );
+
   }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      phone: ['', Validators.required],
+      // password: ['', Validators.required]
     });
   }
+
+  async verify(){
+    const loading = await this.loadingController.create({
+      message: 'Please wait ...',
+    });
+    await loading.present();
+
+    this.loginService.PhnoeCode(this.loginForm.value).subscribe(
+        async value => {
+          if (value.status === 100) {
+            await loading.dismiss();
+            const modal = await this.modalController.create({
+              component: PhoneVerifyComponent,
+              componentProps: {
+                phone: this.loginForm.get('phone').value
+              }
+            });
+            await modal.present();
+          } else {
+            const toast = await this.toastController.create({
+              message: value.message,
+              duration: 5000
+            });
+            await loading.dismiss();
+            await toast.present();
+          }
+        }
+    )
+  }
+
 
   async login() {
     const loading = await this.loadingController.create({
@@ -67,7 +105,7 @@ export class LoginComponent implements OnInit {
             this.setUserData(result.data);
             await loading.dismiss();
             await this.router.navigate(['/tabs']);
-            await this.modalController.dismiss();
+            // await this.modalController.dismiss();
           }
           if (result.status === 500) {
             const toast = await this.toastController.create({
@@ -103,9 +141,19 @@ export class LoginComponent implements OnInit {
   }
 
   async register() {
+    // this.modalController.dismiss().then();
     const modal = await this.modalController.create({
       component: RegisterPage
     });
     await modal.present();
   }
+
+  async phone() {
+    // this.modalController.dismiss().then();
+    const modal = await this.modalController.create({
+      component: PhoneComponent
+    });
+    await modal.present();
+  }
+
 }

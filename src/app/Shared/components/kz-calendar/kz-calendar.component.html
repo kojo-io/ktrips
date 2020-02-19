@@ -1,0 +1,33 @@
+<div style="padding-left: 20px; margin-top: 20px">
+ <div class="container-fluid">
+   <div class="row">
+     <ion-fab-button size="small" (click)="GetPreviousMonth()">
+       <ion-icon name="arrow-dropleft"></ion-icon>
+     </ion-fab-button>
+     <ion-select selectedText="{{month}}" (ionChange)="calendarMonthChange($event)" style="width: 140px">
+       <ion-select-option [selected]="month.selected" *ngFor="let month of AllMonths" value="{{month.name}}">{{month.name}}</ion-select-option>
+     </ion-select>
+     <ion-select selectedText="{{agDate.getFullYear()}}" (ionChange)="calendarYearChange($event)">
+       <ion-select-option [selected]="year.selected" *ngFor="let year of years" value="{{year.year}}">{{year.year}}</ion-select-option>
+     </ion-select>
+     <ion-fab-button size="small" (click)="GetNextMonth()">
+       <ion-icon name="arrow-dropright"></ion-icon>
+     </ion-fab-button>
+   </div>
+   <div class="row">
+     <div class="col">
+       <ion-slides pager="false" [options]="slidesOpts">
+         <ng-container *ngFor="let date of AllDates; let i = index">
+           <ion-slide *ngIf="minDate <= date.date && date.date <= maxDate">
+             <div #element class="datec" (click)="onCalendarChange(date.date, element)">
+               <!--        <small class="top">{{GetDay(date.date)}}</small>-->
+               <h1>{{GetDate(date.date)}}</h1>
+               <small class="bottom">{{GetDay(date.date)}}</small>
+             </div>
+           </ion-slide>
+         </ng-container>
+       </ion-slides>
+     </div>
+   </div>
+ </div>
+</div>

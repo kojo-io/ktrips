@@ -5,8 +5,9 @@ import {LoadingController, ModalController, ToastController} from '@ionic/angula
 import {SearchService} from './search.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {BusresultsComponent} from './busresults/busresults.component';
+import {BusresultsComponent} from '../busresults/busresults.component';
 import {Router} from '@angular/router';
+import {Network} from "@ionic-native/network/ngx";
 
 @Component({
     selector: 'app-search',
@@ -14,8 +15,8 @@ import {Router} from '@angular/router';
     styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit, AfterContentInit {
-
-    mindate = new Date();
+    offline = false;
+    mindate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     maxdate = new Date(2100, 1, 1);
     showloader = false;
     noshow = false;
@@ -28,6 +29,7 @@ export class SearchPage implements OnInit, AfterContentInit {
     filteredOptionsFrom: Observable<any[]>;
     filteredOptionsTo: Observable<any[]>;
     @Input() complete: any;
+    canExit: Boolean = true;
     constructor(
         private formbuilder: FormBuilder,
         private baseService: BaseService,
@@ -35,17 +37,29 @@ export class SearchPage implements OnInit, AfterContentInit {
         public loadingController: LoadingController,
         private searchService: SearchService,
         public modalController: ModalController,
-        private router: Router
+        private router: Router,
+        private network: Network
     ) {
         this.baseService.completed.subscribe(
             async result => {
                 this.complete = result;
             }
         );
+
+        this.baseService.CanExist(true);
+        this.baseService.connectionStatus.subscribe(
+            async result => {
+                if (!result) {
+                    this.offline = true;
+                    this.ngOnInit();
+                } else {
+                    this.offline = false;
+                }
+            }
+        );
     }
 
     ngOnInit() {
-
     }
 
     ngAfterContentInit(): void {
@@ -55,6 +69,8 @@ export class SearchPage implements OnInit, AfterContentInit {
             to: [null, Validators.required],
             date: [null, Validators.required]
         });
+        this.GetRoutes();
+
 
         this.searchForm.get('from').valueChanges.subscribe(
             value => {
@@ -87,6 +103,11 @@ export class SearchPage implements OnInit, AfterContentInit {
     //     console.log(`${value.getFullYear()}-${value.getMonth() + 1}-${value.getDate()}`);
     //     return `${value.getFullYear()}-${value.getMonth() + 1}-${value.getDate()}`;
     // }
+
+    getDate(event) {
+        this.searchForm.get('date').setValue(event);
+        console.log(event);
+    }
 
     GetRoutes(): void {
         this.searchService.GetRoutes().subscribe(
@@ -161,7 +182,7 @@ export class SearchPage implements OnInit, AfterContentInit {
                             {data: this.AllAvailableBuses,
                             from: this.searchForm.get('from').value,
                             to: this.searchForm.get('to').value});
-                        await this.router.navigate(['/tabs/search/bus-results']);
+                        await this.router.navigate(['/bus-results']);
                     }
                     console.log(result.data);
                 }

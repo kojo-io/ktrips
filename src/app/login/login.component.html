@@ -1,5 +1,6 @@
 <ion-content >
-  <div style="margin-top: 3rem">
+  <ion-col style="margin-top: 2rem">
+    <img src="assets/images/logo/img-head.png" class="ion-padding-bottom img">
     <ion-slides pager="true" [options]="slideOpts">
       <ion-slide>
         <img src="assets/slides/order.svg">
@@ -19,29 +20,35 @@
       </ion-slide>
     </ion-slides>
     <form class="container" nz-form name="loginForm" [formGroup]="loginForm" novalidate>
-      <div class="row">
-        <div class="col-12">
-          <mat-form-field class="example-full-width">
-            <span matPrefix><ion-icon name="person"></ion-icon></span>
-            <input matInput placeholder="Email or Username" formControlName="email">
+      <ion-row>
+        <ion-col size="12">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder=" Phone" formControlName="phone">
+            <span matSuffix><ion-icon name="person"></ion-icon></span>
           </mat-form-field>
-        </div>
-        <div class="col-12">
-          <mat-form-field class="example-full-width">
-            <span matPrefix><ion-icon name="lock"></ion-icon></span>
-            <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <div class="col-12">
-          <ion-button size="large" shape="round" expand="block" (click)="login()">Login</ion-button>
-        </div>
-        <div class="ion-padding-top">
-          <ion-button size="large" shape="round" fill="outline" expand="block" (click)="register()" >Register</ion-button>
-        </div>
-      </div>
+        </ion-col>
+<!--        <ion-col size="12">-->
+<!--          <mat-form-field class="example-full-width">-->
+<!--            <span matPrefix><ion-icon name="lock"></ion-icon></span>-->
+<!--            <input matInput placeholder=" Password" [type]="hide ? 'password' : 'text'" formControlName="password">-->
+<!--            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">-->
+<!--              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>-->
+<!--            </button>-->
+<!--          </mat-form-field>-->
+<!--        </ion-col>-->
+        <ion-col size="12">
+          <ion-button expand="block" (click)="verify()">Login</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button fill="outline" expand="block" (click)="phone()">pin</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button fill="outline" expand="block" (click)="register()">Sign Up!</ion-button>
+        </ion-col>
+      </ion-row>
     </form>
-  </div>
+  </ion-col>
 </ion-content>

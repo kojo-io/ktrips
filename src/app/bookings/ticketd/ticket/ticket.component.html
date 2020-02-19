@@ -6,6 +6,9 @@
       </ion-button>
     </ion-buttons>
     <img src="assets/images/logo/img-head.png" class="img-head">
+    <ion-chip slot="secondary" color="danger" *ngIf="offline">
+      <ion-label>network disconnected ☹</ion-label>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 

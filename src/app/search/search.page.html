@@ -1,52 +1,49 @@
 <ion-header>
   <ion-toolbar>
     <img src="assets/images/logo/img-head.png" class="img-head">
-    <ion-title class="ion-padding-bottom">Search</ion-title>
+<!--    <ion-title class="ion-padding-bottom">Search</ion-title>-->
+    <ion-chip slot="secondary" color="danger" *ngIf="offline">
+      <ion-label>network disconnected ☹</ion-label>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div style="background-color: #8bc34a">
+  <ion-fab vertical="top" horizontal="end" edge slot="fixed" class="wow heartBeat animated" (click)="GetAvailable()" data-wow-duration="1s" data-wow-delay="0.2s" [hidden]="searchForm.invalid">
+    <ion-fab-button>
+      <ion-icon name="search"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div class="ccpad wow slideInDown animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+    <app-kz-date colorDate="#8bc34a" fontSizeDate="50px" fontSizeDay="25px" fontSizeMonthYear="15px"></app-kz-date>
     <form class="ion-padding container" nz-form name="loginForm" [formGroup]="searchForm" novalidate>
-      <mat-card class="example-card">
-        <img src="assets/images/arrow.svg" class="img-arrow">
-        <ion-row class="row">
-          <ion-col>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="FROM" formControlName="from" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptionsFrom | async" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </ion-col>
-          <ion-col>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="TO" formControlName="to" [matAutocomplete]="toauto">
-              <mat-autocomplete #toauto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptionsTo | async" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </ion-col>
-        </ion-row>
-      </mat-card>
-      <br>
-      <mat-card>
+      <ion-row>
         <ion-col>
-          <mat-form-field class="example-full-width">
-            <input readonly formControlName="date" matInput [min]="mindate" [max]="maxdate" [matDatepicker]="picker" placeholder="Choose a date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>FROM</mat-label>
+            <input matInput placeholder="FROM" formControlName="from" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptionsFrom | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </ion-col>
-      </mat-card>
+        <ion-col>
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>TO</mat-label>
+            <input matInput placeholder="TO" formControlName="to" [matAutocomplete]="toauto">
+            <mat-autocomplete #toauto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptionsTo | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
     </form>
   </div>
-  <br>
- <div class="ion-padding-horizontal">
-   <ion-button size="large" expand="block" [disabled]="searchForm.invalid" (click)="GetAvailable()">Find Available Buses</ion-button>
- </div>
+  <div class="wow slideInRight animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+    <app-kz-calendar (agDateChange)="getDate($event)" [minDate]="mindate" [maxDate]="maxdate"></app-kz-calendar>
+  </div>
 </ion-content>

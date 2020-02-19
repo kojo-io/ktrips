@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+      <img src="assets/images/logo/img-head.png" class="img-head">
+    <ion-title><span class="title"></span></ion-title>
+      <ion-chip slot="secondary" color="danger" *ngIf="offline">
+          <ion-label>network disconnected ☹</ion-label>
+      </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="container-fluid pt-3 wow fadeInLeft animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <div class="row">
+            <div class="col-9">
+                <span><ion-icon name="radio-button-on"></ion-icon> from</span>
+                <h1 class="mt--1"><span class="mb-3" style="color: #8bc34a">{{from}}</span></h1>
+                <hr class="hr-class">
+                <span><ion-icon name="radio-button-on"></ion-icon> destination</span>
+                <h1 class="mt--1"><span class="mb-3" style="color: #8bc34a">{{to}}</span></h1>
+            </div>
+            <div class="col-3">
+            </div>
+        </div>
+    </div>
+    <div class="ccpad">
+        <div *ngFor="let items of data">
+            <div class="d-flex w-100 justify-content-between">
+                <h3 class="font-weight-bold pl-3">{{items.company}}</h3>
+            </div>
+            <ion-slides pager="false" [options]="slidesOpts" style="margin-left: -5px; margin-right: -10px">
+                <ng-container *ngFor="let item of items.buses; let i = index">
+                    <ion-slide>
+                        <a (click)="openBus(item)" class="card wow fadeInRight animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+                            <div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h2 class="font-weight-bold" style="color: #8bc34a">{{item.numberPlate}}</h2>
+                                            <span class="d-block font-weight-bold">{{item.busType}}</span>
+                                            <span class="d-block">capacity: {{item.capacity}}</span>
+                                            <span class="d-block">{{item.remaining}} left</span>
+                                            <span class="d-block">{{item.station.station}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-end">
+                                        <h1 class="text-center font-weight-bold" style="font-size: 50px; color: #8bc34a"><small>GHC</small> {{item.price}}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </ion-slide>
+                </ng-container>
+            </ion-slides>
+        </div>
+    </div>
+</ion-content>

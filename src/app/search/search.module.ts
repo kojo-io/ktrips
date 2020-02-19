@@ -15,11 +15,14 @@ import {
     MatInputModule,
     MatListModule
 } from '@angular/material';
-import {BusresultsComponent} from './busresults/busresults.component';
+import {BusresultsComponent} from '../busresults/busresults.component';
 import {SearchPage} from './search.page';
-import {SingleResultComponent} from './single-result/single-result.component';
-import {SelectedSeatsComponent} from './selected-seats/selected-seats.component';
+import {SingleResultComponent} from '../single-result/single-result.component';
+import {SelectedSeatsComponent} from '../selected-seats/selected-seats.component';
 import {MomentModule} from 'ngx-moment';
+import {MatChipsModule} from "@angular/material/chips";
+import {SharedModule} from "../Shared/shared.module";
+import {ReceiptComponent} from "../receipt/receipt.component";
 
 
 @NgModule({
@@ -36,9 +39,11 @@ import {MomentModule} from 'ngx-moment';
         MatButtonModule,
         MatListModule,
         MomentModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        MatChipsModule,
+        SharedModule
     ],
-    declarations: [SearchPage, BusresultsComponent, SingleResultComponent, SelectedSeatsComponent],
-    entryComponents: [BusresultsComponent, SingleResultComponent, SelectedSeatsComponent]
+    declarations: [SearchPage],
+    entryComponents: []
 })
 export class SearchPageModule {}

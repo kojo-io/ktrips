@@ -2,7 +2,7 @@ import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {BaseService} from '../utilities/base.service';
 import {BookingService} from './booking.service';
 import {LoadingController, ModalController} from '@ionic/angular';
-import {SingleResultComponent} from '../search/single-result/single-result.component';
+import {SingleResultComponent} from '../single-result/single-result.component';
 import {TicketdComponent} from './ticketd/ticketd.component';
 
 @Component({
@@ -13,12 +13,24 @@ import {TicketdComponent} from './ticketd/ticketd.component';
 export class BookingsPage implements OnInit, AfterContentInit {
   AllTickets: Array<any> = [];
   AllCancelledTickets: Array<any> = [];
+  offline = false;
   constructor(
       private baseService: BaseService,
       private bookingService: BookingService,
       public loadingController: LoadingController,
       public modalController: ModalController
-  ) { }
+  ) {
+    this.baseService.CanExist(false);
+    this.baseService.connectionStatus.subscribe(
+        async result => {
+          if (!result) {
+            this.offline = true;
+          } else {
+            this.offline = false;
+          }
+        }
+    );
+  }
 
   async ngOnInit() {
 

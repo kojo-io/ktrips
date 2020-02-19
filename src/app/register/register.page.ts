@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {LoadingController, ModalController, ToastController} from '@ionic/angular';
+import {LoadingController, ModalController, Platform, ToastController} from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { BaseService } from '../utilities/base.service';
 import { RegisterService } from './register.service';
 import {LoginComponent} from '../login/login.component';
+import {PhoneComponent} from "../login/phone/phone.component";
+import {PhoneVerifyComponent} from "../phone-verify/phone-verify.component";
 
 /**
  * Confirm password validator
@@ -54,22 +56,29 @@ export class RegisterPage implements OnInit {
     private baseService: BaseService,
     public toastController: ToastController,
     private registerService: RegisterService,
-    public modalController: ModalController
-  ) { }
+    public modalController: ModalController,
+    private platform: Platform
+  ) {
+
+    this.baseService.CanExist(false);
+    // this.platform.backButton.subscribe(async () => {
+    //   this.modalController.dismiss()
+    //   const modal = await this.modalController.create({
+    //     component: LoginComponent
+    //   });
+    //   await modal.present();
+    // });
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      contact: ['', Validators.required],
-      address: ['', Validators.required],
+      // firstName: ['', Validators.required],
+      // lastName: ['', Validators.required],
+      phone: ['', Validators.required],
+      // address: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['', Validators.required],
-      passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
-    });
-
-    this.loginForm.get('password').valueChanges.subscribe(() => {
-      this.loginForm.get('passwordConfirm').updateValueAndValidity();
+      // password: ['', Validators.required],
+      // passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
     });
   }
 
@@ -86,13 +95,19 @@ export class RegisterPage implements OnInit {
 
     console.log(creds);
 
-    this.registerService.register(creds).subscribe(
+    this.registerService.PhoneRegister(creds).subscribe(
       async result => {
         if (result.status === 102) {
-          this.setUserData(result);
+          // this.setUserData(result);
           await loading.dismiss();
-          await this.router.navigate(['/tabs']);
           await this.modalController.dismiss();
+          const modal = await this.modalController.create({
+            component: PhoneVerifyComponent,
+            componentProps: {
+              phone: creds.phone
+            }
+          });
+          await modal.present();
         } else {
           const toast = await this.toastController.create({
             message: JSON.stringify(result.message),
@@ -129,6 +144,11 @@ export class RegisterPage implements OnInit {
 
   async login() {
     this.modalController.dismiss().then();
+    // const modal = await this.modalController.create({
+    //   component: LoginComponent
+    // });
+    // await modal.present();
+    this.router.navigate(['/login']);
   }
 }
 

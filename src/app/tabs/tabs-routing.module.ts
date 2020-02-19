@@ -6,7 +6,6 @@ import {RouteGuard} from "../utilities/route-guard.service";
 const routes: Routes = [
   {
     path: 'tabs',
-    canActivate: [RouteGuard],
     component: TabsPage,
     children: [
       {

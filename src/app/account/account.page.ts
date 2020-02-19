@@ -10,27 +10,27 @@ import {ModalController} from "@ionic/angular";
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
-
+    offline = false;
+    user: any;
   constructor(
       private router: Router,
       private baseService: BaseService,
       public modalController: ModalController
   ) {
-      this.baseService.check().subscribe(
-          async response =>{
-              if(response.status !== 100) {
-                  this.baseService.logout();
-                  localStorage.removeItem('ustripsession');
-                  const modal = await this.modalController.create({
-                      component: LoginComponent
-                  });
-                  await modal.present();
+      this.baseService.CanExist(false);
+      this.baseService.connectionStatus.subscribe(
+          async result => {
+              if (!result) {
+                  this.offline = true;
+              } else {
+                  this.offline = false;
               }
           }
-      )
+      );
   }
 
   ngOnInit() {
+
   }
 
   logout(): void {
@@ -38,7 +38,7 @@ export class AccountPage implements OnInit {
         result => {
           if (result.status === 105) {
               this.baseService.clearSessionData();
-            this.router.navigate(['/']);
+              this.router.navigate(['/login']);
           }
         }
     );

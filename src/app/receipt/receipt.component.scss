@@ -1,0 +1,48 @@
+ion-toolbar{
+  -border-style: none;
+  box-shadow: none !important;
+}
+
+.ccpad{
+  position: relative;
+  height: 100%;
+  margin-top: -100px;
+  bottom: -150px;
+  right: 0;
+  left: 0;
+  background-color: #fcfdff;
+  padding: 20px 10px 10px 10px;
+  border-radius: 50px 50px 0px 0px;
+  -webkit-box-shadow: 14px 10px 32px 8px rgba(209,209,209,1);
+  -moz-box-shadow: 14px 10px 32px 8px rgba(209,209,209,1);
+  box-shadow: 14px 10px 32px 8px rgba(209,209,209,1);
+}
+hr{
+  border: 1px none grey;
+  border-top-style: solid;
+  width: 100%;
+}
+
+.img-container{
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 5px !important;
+  border: solid 1px grey !important;
+  border-radius: 5px !important;
+}
+.img-container>img{
+  display: block;
+  margin-top: 2px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.img-container>span{
+  display: block !important;
+  text-align: center !important;
+  font-size: 15px;
+}
+
+
+.modal{
+  --background: red;
+}

@@ -15,4 +15,12 @@ export class RegisterService {
   register(user): any {
     return this.httpClient.post(this.baseService.getBaseUrl() + 'Account/register', user);
   }
+
+  PhoneRegister(user): any {
+    return this.httpClient.post(this.baseService.getBaseUrl() + 'Account/PhoneRegister', user);
+  }
+
+  PhoneVerify(user): any {
+    return this.httpClient.post(this.baseService.getBaseUrl() + 'Account/PhoneNumberVerify', user);
+  }
 }

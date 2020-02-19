@@ -1,9 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SearchService} from '../search.service';
+import {SearchService} from '../search/search.service';
 import {AlertController, LoadingController, ModalController} from '@ionic/angular';
 import {readStringArrayType} from '@angular/compiler-cli/src/ngtsc/metadata/src/util';
 import {Router} from '@angular/router';
-import {BaseService} from '../../utilities/base.service';
+import {BaseService} from '../utilities/base.service';
+import {PhoneVerifyComponent} from "../phone-verify/phone-verify.component";
+import {ReceiptComponent} from "../receipt/receipt.component";
 
 @Component({
   selector: 'app-selected-seats',
@@ -20,18 +22,30 @@ export class SelectedSeatsComponent implements OnInit {
   editCache = {};
   AllRoutes: any[];
   BookObject: Array<any> = [];
+  offline = false;
   constructor(private searchService: SearchService,
               public alertController: AlertController,
               public loadingController: LoadingController,
               private baseService: BaseService,
               public modalController: ModalController,
               private router: Router) {
+    this.baseService.CanExist(false);
     this.baseService.completed.subscribe(
         async result => {
           this.complete = result;
 
           if (this.complete === true) {
             await this.modalController.dismiss();
+          }
+        }
+    );
+
+    this.baseService.connectionStatus.subscribe(
+        async result => {
+          if (!result) {
+            this.offline = true;
+          } else {
+            this.offline = false;
           }
         }
     );
@@ -45,7 +59,7 @@ export class SelectedSeatsComponent implements OnInit {
 
     this.GetRoutePoints();
     this.SelectedSeats.forEach((value) => {
-      value.Name = `${this.baseService.getUserData().firstname} ${this.baseService.getUserData().lastName}`;
+      value.Name = `${this.baseService.getUserData().firstName} ${this.baseService.getUserData().lastName}`;
       value.Email = this.baseService.getUserData().email;
       value.Phone = this.baseService.getUserData().contact;
       this.editCache[value.seatcode] = {
@@ -55,7 +69,7 @@ export class SelectedSeatsComponent implements OnInit {
           DropOffPoint: 0,
           pickup: '',
           dropoff: '',
-          Name: `${this.baseService.getUserData().firstname} ${this.baseService.getUserData().lastName}`,
+          Name: `${this.baseService.getUserData().firstName} ${this.baseService.getUserData().lastName}`,
           Email: this.baseService.getUserData().email,
           Phone: this.baseService.getUserData().contact
         }
@@ -64,7 +78,8 @@ export class SelectedSeatsComponent implements OnInit {
   }
 
   async dismiss() {
-    await this.modalController.dismiss();
+    await this.router.navigate(['/single-result']);
+    this.baseService.clearsessions('seatresults');
   }
 
   startEdit(key: string): void {
@@ -107,10 +122,6 @@ export class SelectedSeatsComponent implements OnInit {
   }
 
   async BookSeat(): Promise<void> {
-    const loading = await this.loadingController.create({
-      message: 'Please wait ...',
-    });
-    await loading.present();
     this.BookObject = [];
     this.SelectedSeats.forEach(
         ticket => {
@@ -126,11 +137,33 @@ export class SelectedSeatsComponent implements OnInit {
             dropOffPoint: ticket.DropOffPoint,
             name: ticket.Name,
             email: ticket.Email,
-            phone: ticket.Phone
+            phone: ticket.Phone,
+            busTripId: this.Bus.bustrip,
           });
         }
     );
 
+    const receipt = {
+      company: this.Bus.company,
+      bus: this.Bus.numberPlate,
+      type: this.Bus.busType,
+      seats: this.BookObject
+    };
+
+    const modal = await this.modalController.create({
+      component: ReceiptComponent,
+      componentProps: {
+        receipt
+      }
+    });
+    await modal.present();
+  }
+
+  async checkOut() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait ...',
+    });
+    await loading.present();
     this.searchService.PostBook(this.BookObject).subscribe(
         async result => {
           if (result.status === 201) {

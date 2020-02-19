@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AlertController, LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {TicketComponent} from './ticket/ticket.component';
 import {BookingService} from '../booking.service';
+import {BaseService} from "../../utilities/base.service";
 
 @Component({
   selector: 'app-ticketd',
@@ -10,11 +11,25 @@ import {BookingService} from '../booking.service';
 })
 export class TicketdComponent implements OnInit {
   @Input() data: any;
+  offline = false;
   constructor(public modalController: ModalController,
               private bookingService: BookingService,
               public toastController: ToastController,
+              private baseService: BaseService,
               public loadingController: LoadingController,
-              public alertController: AlertController) { }
+              public alertController: AlertController) {
+
+    this.baseService.CanExist(false);
+    this.baseService.connectionStatus.subscribe(
+        async result => {
+          if (!result) {
+            this.offline = true;
+          } else {
+            this.offline = false;
+          }
+        }
+    );
+  }
 
   async dismiss() {
     await this.modalController.dismiss();

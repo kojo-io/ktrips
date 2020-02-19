@@ -1,0 +1,89 @@
+<ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-button (click)="dismiss()">
+            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <img src="assets/images/logo/img-head.png" class="img-head">
+    <!--  <ion-title class="ion-padding-bottom">Ticket</ion-title>-->
+    <!--    <ion-chip slot="secondary" color="danger" *ngIf="offline">-->
+    <!--      <ion-label>network disconnected ☹</ion-label>-->
+    <!--    </ion-chip>-->
+</ion-toolbar>
+<ion-content>
+    <h1 class="font-weight-bold ml-3" style="font-size: 50px">Receipt</h1>
+    <div class="ccpad wow slideInUp animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <h1 class="text-center font-weight-bold">
+            {{AvailableBus.from}} - {{AvailableBus.to}}
+        </h1>
+        <hr>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!--          <div class="d-flex justify-content-between">-->
+                    <!--            <h5 class="m1 font-weight-bold">Book Date</h5>-->
+                    <!--            <h5 class="m1">12-09-2020</h5>-->
+                    <!--          </div>-->
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Company</h5>
+                        <h5 class="m1">{{receipt.company.name}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Bus Number</h5>
+                        <h5 class="m1">{{receipt.bus}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Bus Type</h5>
+                        <h5 class="m1">{{receipt.type}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Seats</h5>
+                        <div style="max-width: 200px">
+                            <div class="d-flex flex-column bd-highlight mb-3">
+                                <div class="d-flex flex-row flex-wrap justify-content-end">
+                                    <div *ngFor="let seat of receipt.seats" class="p-1 m-1 img-container">
+                                        <!--                  <img src="assets/images/seat.svg" width="20">-->
+                                        <span>{{seat.seatCode}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Unit Cost</h5>
+                        <h5 class="m1">{{AvailableBus.price}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Service Charges</h5>
+                        <h5 class="m1">{{serviceCharge}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Discount</h5>
+                        <h5 class="m1">-</h5>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="m1 font-weight-bold">Insurance Cover</h5>
+                        <h5 class="m1">-</h5>
+                    </div>
+                    <hr style="border-style: dashed">
+                    <div class="d-flex justify-content-between">
+                        <h1 class="m1 font-weight-bold">Total</h1>
+                        <h1 class="m1">{{Total}}</h1>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-between">
+                        <span class="m1 font-weight-bold">Note :</span>
+                        <i class="m1">you will receive an alert to enter your pin to confirm payment to proceed with ticket booking completion.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ion-grid>
+            <ion-row class="ion-padding-top">
+                <ion-col>
+                    <ion-button size="large" expand="block" [disabled]="baseService.getUserData().contact === null" (click)="save()">Proceed to complete</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

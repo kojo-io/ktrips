@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <img src="assets/images/logo/img-head.png" class="img-head">
+<!--    <ion-title class="ion-padding-bottom"><span class="title">{{Bus.company.name}} - {{Bus.numberPlate}}</span></ion-title>-->
+    <ion-chip slot="secondary" color="danger" *ngIf="offline">
+      <ion-label>network disconnected ☹</ion-label>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-fluid pt-3">
+    <div class="row">
+      <div class="col-8 wow fadeInLeft animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+        <span><ion-icon name="radio-button-on"></ion-icon> company</span>
+        <h1 class="mt--1"><span class="mb-3" style="color: #8bc34a">{{Bus.company.name}}</span></h1>
+        <hr class="hr-class">
+        <span><ion-icon name="radio-button-on"></ion-icon> bus number</span>
+        <h1 class="mt--1"><span class="mb-3" style="color: #8bc34a">{{Bus.numberPlate}}</span></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="ccpad wow slideInUp animated" data-wow-duration="0.5s" data-wow-delay="0.2s">
+   <ng-container *ngFor="let item of SelectedSeats">
+     <div style="position: relative">
+       <div style="display: block; padding-left: 10px; margin-top: -10px;z-index: 999999; position: absolute">
+         <ng-container *ngIf="!editCache[item.seatcode].edit; else saveTpl">
+           <button (click)="startEdit(item.seatcode)" mat-mini-fab color="primary"><ion-icon slot="icon-only" name="create"></ion-icon></button>
+         </ng-container>
+         <ng-template #saveTpl>
+           <button (click)="saveEdit(item.seatcode)" mat-mini-fab color="primary"><ion-icon slot="icon-only" name="checkmark"></ion-icon></button>
+           <button (click)="cancelEdit(item.seatcode)" mat-mini-fab color="warn"><ion-icon slot="icon-only" name="close"></ion-icon></button>
+         </ng-template>
+       </div>
+     </div>
+     <ion-card class="card">
+       <div class="container-fluid">
+         <ion-row>
+           <ion-col size="6" style="text-align: start;">
+             <b>{{item.seatcode}}</b>
+           </ion-col>
+           <ion-col size="6" style="text-align: end;">
+             <b>{{item.bookcode}}</b>
+           </ion-col>
+         </ion-row>
+         <ion-row>
+           <ion-col>
+             <ng-container *ngIf="!editCache[item.seatcode].edit">
+                 <span class="d-block w-100 float-right">
+                   Name: {{ item.Name }}
+                 </span>
+             </ng-container>
+             <ng-container *ngIf="editCache[item.seatcode].edit">
+               <mat-form-field class="example-full-width">
+                 <input placeholder="Name" matInput type="text" [(ngModel)]="editCache[item.seatcode].data.Name" />
+               </mat-form-field>
+             </ng-container>
+           </ion-col>
+         </ion-row>
+         <ion-row>
+           <ion-col>
+             <ng-container *ngIf="!editCache[item.seatcode].edit">
+                 <span class="d-block w-100">
+                   Phone: {{ item.Phone }}
+                 </span>
+             </ng-container>
+             <ng-container *ngIf="editCache[item.seatcode].edit">
+               <mat-form-field class="example-full-width">
+                 <input placeholder="Phone" matInput type="number" [(ngModel)]="editCache[item.seatcode].data.Phone" />
+               </mat-form-field>
+             </ng-container>
+           </ion-col>
+         </ion-row>
+         <ion-row>
+           <ion-col>
+             <ng-container *ngIf="!editCache[item.seatcode].edit;">
+               Email: {{ item.Email }}
+             </ng-container>
+             <ng-container *ngIf="editCache[item.seatcode].edit;">
+               <mat-form-field class="example-full-width">
+                 <input type="email" matInput placeholder="Email" [(ngModel)]="editCache[item.seatcode].data.Email" />
+               </mat-form-field>
+             </ng-container>
+           </ion-col>
+         </ion-row>
+         <ion-row>
+           <ion-col size="6" style="text-align: start;">
+             <ng-container *ngIf="!editCache[item.seatcode].edit;">
+               Pick up: {{item.PickupPoint}}
+             </ng-container>
+             <ng-container *ngIf="editCache[item.seatcode].edit;">
+               <ion-item>
+                 <ion-label>Pick Point</ion-label>
+                 <ion-select size="small" placeholder="Select One" [(ngModel)]="editCache[item.seatcode].data.PickupPointId">
+                   <ion-select-option *ngFor="let item of AllRoutes" value="{{item.id}}">
+                     {{item.name}}
+                   </ion-select-option>
+                 </ion-select>
+               </ion-item>
+             </ng-container>
+           </ion-col>
+           <ion-col size="6" style="text-align: end;">
+             <ng-container *ngIf="!editCache[item.seatcode].edit;">
+               Drop off: {{item.DropPoint}}
+             </ng-container>
+             <ng-container *ngIf="editCache[item.seatcode].edit;">
+               <ion-item>
+                 <ion-label>Drop Point</ion-label>
+                 <ion-select size="small" placeholder="Select One" [(ngModel)]="editCache[item.seatcode].data.DropOffPoint">
+                   <ion-select-option *ngFor="let item of AllRoutes" value="{{item.id}}">
+                     {{item.name}}
+                   </ion-select-option>
+                 </ion-select>
+               </ion-item>
+             </ng-container>
+           </ion-col>
+         </ion-row>
+       </div>
+     </ion-card>
+   </ng-container>
+    <ion-grid>
+      <ion-row class="ion-padding-top">
+        <ion-col>
+          <ion-button size="large" expand="block" (click)="BookSeat()">Book Seats</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

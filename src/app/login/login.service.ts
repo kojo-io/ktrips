@@ -16,4 +16,9 @@ export class LoginService {
     // alert('something');
     return this.httpClient.post(this.baseService.getBaseUrl() + 'Account/Login', userlogin);
   }
+
+  // PhnoeCode
+  PhnoeCode(userlogin): any {
+    return this.httpClient.post(this.baseService.getBaseUrl() + 'Account/PhnoeCode', userlogin);
+  }
 }
