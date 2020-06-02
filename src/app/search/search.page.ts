@@ -69,7 +69,6 @@ export class SearchPage implements OnInit, AfterContentInit {
             to: [null, Validators.required],
             date: [null, Validators.required]
         });
-        this.GetRoutes();
 
 
         this.searchForm.get('from').valueChanges.subscribe(

@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-kz-calendar',
@@ -116,7 +116,7 @@ export class KzCalendarComponent implements OnInit {
   }
 
   GetYears() {
-    for(let i = this.minDate.getFullYear(); i <= this.maxDate.getFullYear(); i++) {
+    for (let i = this.minDate.getFullYear(); i <= this.maxDate.getFullYear(); i++) {
       this.years.push({year: i, selected: false});
     }
   }
@@ -231,7 +231,7 @@ export class KzCalendarComponent implements OnInit {
 
   onCalendarChange(date, index: Element) {
     const allEle = document.getElementsByClassName('datec');
-    for(let i = 0; i < allEle.length; i++) {
+    for (let i = 0; i < allEle.length; i++) {
       allEle.item(i).classList.remove('selected');
     }
     index.classList.add('selected');

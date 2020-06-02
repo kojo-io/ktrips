@@ -1,7 +1,8 @@
 {
   "name": "ktrips",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

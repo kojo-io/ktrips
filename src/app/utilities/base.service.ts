@@ -5,7 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 declare var WOW: any;
 
 // const baseURL = 'https://localhost:44341/api/';
-const  baseURL = 'https://mobilekazitrips.azurewebsites.net/api/';
+const  baseURL = 'https://mobkazi.azurewebsites.net/api/';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,7 @@ const  baseURL = 'https://mobilekazitrips.azurewebsites.net/api/';
 
 export class BaseService {
   wow: any;
-  constructor(private router: Router, private httpClient: HttpClient
-  ) { }
+  constructor(private router: Router, private httpClient: HttpClient) { }
 
   private baseurl = baseURL;
 

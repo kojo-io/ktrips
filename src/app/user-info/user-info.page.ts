@@ -19,7 +19,6 @@ export class UserInfoPage implements OnInit {
     form: FormGroup;
     image = 'assets/images/user.svg';
     offline = false;
-    croppedImagepath = '';
     user: any;
     loginClick = false;
     options: CameraOptions = {
@@ -28,10 +27,7 @@ export class UserInfoPage implements OnInit {
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
     };
-    imagePickerOptions = {
-        maximumImagesCount: 1,
-        quality: 50
-    };
+
     constructor(
         private router: Router,
         private baseService: BaseService,
@@ -49,11 +45,7 @@ export class UserInfoPage implements OnInit {
         this.baseService.CanExist(false);
         this.baseService.connectionStatus.subscribe(
             async result => {
-                if (!result) {
-                    this.offline = true;
-                } else {
-                    this.offline = false;
-                }
+                this.offline = !result;
             }
         );
     }
@@ -144,9 +136,8 @@ export class UserInfoPage implements OnInit {
         });
     }
 
-
     cropImage(fileUrl) {
-        this.crop.crop(fileUrl, { quality: 50 })
+        this.crop.crop(fileUrl, { quality: 30 })
             .then(
                 newPath => {
                     this.showCroppedImage(newPath.split('?')[0]);
@@ -184,6 +175,28 @@ export class UserInfoPage implements OnInit {
             }]
         });
         await actionSheet.present();
+    }
+
+    async showCroppedImage(ImagePath) {
+
+        var copyPath = ImagePath;
+        var splitPath = copyPath.split('/');
+        var imageName = splitPath[splitPath.length - 1];
+        var filePath = ImagePath.split(imageName)[0];
+        const loading = await this.loadingController.create({
+            message: 'please wait ...',
+        });
+        await loading.present();
+        this.file.readAsDataURL(filePath, imageName).then(base64 => {
+            this.image = base64;
+            this.form.patchValue({
+                image: base64
+            });
+            loading.dismiss();
+        }, error => {
+            alert('Error in showing image' + error);
+            loading.dismiss();
+        });
     }
 
     async register() {
@@ -264,27 +277,5 @@ export class UserInfoPage implements OnInit {
 
     async dismiss() {
         await this.router.navigate(['/tabs/account']);
-    }
-
-    async showCroppedImage(ImagePath) {
-
-        var copyPath = ImagePath;
-        var splitPath = copyPath.split('/');
-        var imageName = splitPath[splitPath.length - 1];
-        var filePath = ImagePath.split(imageName)[0];
-        const loading = await this.loadingController.create({
-            message: 'please wait ...',
-        });
-        await loading.present();
-        this.file.readAsDataURL(filePath, imageName).then(base64 => {
-            this.image = base64;
-            this.form.patchValue({
-                image: base64
-            });
-            loading.dismiss();
-        }, error => {
-            alert('Error in showing image' + error);
-            loading.dismiss();
-        });
     }
 }

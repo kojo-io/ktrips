@@ -34,6 +34,9 @@ export class SeatsetupComponent implements OnInit, OnChanges {
   @Input() AllTickets: Array<any> = [];
   @Input() bookedSeats: Array<any> = [];
   @Output() tickSelect = new EventEmitter<any>();
+  @Input() disableLeftColumnNumber: any;
+  @Input() disableRightColumnNumber: any;
+  @Input() disableBackEvenNumbers: any;
   options = [];
   currentDate: Date;
   SelectedTickets: Array<TicketSelect> = [];
