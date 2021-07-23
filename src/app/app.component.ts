@@ -17,7 +17,7 @@ import {SplashScreen} from "@ionic-native/splash-screen";
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  canExit: Boolean = true;
+  canExit = true;
 
   @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<any>;
   constructor(

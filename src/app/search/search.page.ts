@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {BusresultsComponent} from '../busresults/busresults.component';
 import {Router} from '@angular/router';
-import {Network} from "@ionic-native/network/ngx";
+import {Network} from '@ionic-native/network/ngx';
 
 @Component({
     selector: 'app-search',
@@ -29,7 +29,7 @@ export class SearchPage implements OnInit, AfterContentInit {
     filteredOptionsFrom: Observable<any[]>;
     filteredOptionsTo: Observable<any[]>;
     @Input() complete: any;
-    canExit: Boolean = true;
+    canExit = true;
     constructor(
         private formbuilder: FormBuilder,
         private baseService: BaseService,

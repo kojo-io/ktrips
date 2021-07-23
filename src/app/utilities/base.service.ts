@@ -18,9 +18,9 @@ export class BaseService {
   private baseurl = baseURL;
 
   // tslint:disable-next-line:ban-types
-    private booked = new BehaviorSubject<Boolean>(false);
-    private connection = new BehaviorSubject<Boolean>(true);
-    private canExist = new BehaviorSubject<Boolean>(true);
+    private booked = new BehaviorSubject<boolean>(false);
+    private connection = new BehaviorSubject<boolean>(true);
+    private canExist = new BehaviorSubject<boolean>(true);
 
     canExistApp = this.canExist.asObservable();
 
